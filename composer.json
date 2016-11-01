@@ -1,0 +1,19 @@
+{
+    "name": "mario-legenda/ebay-offline-mode",
+    "description": "Ebay API development helper",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mario Skrlec",
+            "email": "whitepostmail@gmail.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-0": {
+            "EbayOfflineMode": "src/",
+        }
+    }
+
+}

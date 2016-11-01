@@ -1,6 +1,6 @@
 <?php
 
-namespace FindingAPI\Core\Response;
+namespace EbayOfflineMode;
 
 use FindingAPI\Core\Exception\EbayOfflineModeException;
 use FindingAPI\EbayApiInterface;

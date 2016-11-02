@@ -2,7 +2,7 @@
 
 namespace EbayOfflineMode;
 
-use FindingAPI\Core\Exception\EbayOfflineModeException;
+use EbayOfflineMode\Exception\EbayOfflineModeException;
 use FindingAPI\EbayApiInterface;
 use GuzzleHttp\Client;
 

@@ -3,7 +3,7 @@
 namespace EbayOfflineMode;
 
 use EbayOfflineMode\Exception\EbayOfflineModeException;
-use FindingAPI\EbayApiInterface;
+use FindingAPI\Finding;
 use GuzzleHttp\Client;
 
 class EbayOfflineMode
@@ -18,9 +18,9 @@ class EbayOfflineMode
     private $requestHandle;
     /**
      * EbayOfflineMode constructor.
-     * @param EbayApiInterface $ebayApi
+     * @param Finding $ebayApi
      */
-    public function __construct(EbayApiInterface $ebayApi)
+    public function __construct(Finding $ebayApi)
     {
         $this->ebayApiObject = $ebayApi;
 

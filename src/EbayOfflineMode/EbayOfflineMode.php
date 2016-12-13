@@ -35,7 +35,7 @@ class EbayOfflineMode
      */
     public function getResponse()
     {
-        $request = $this->ebayApiObject->getProcessed();
+        $request = $this->ebayApiObject->getProcessedRequestString();
         if (!$this->isResponseStored($request)) {
             $requests = file(__DIR__.'/requests.csv');
 

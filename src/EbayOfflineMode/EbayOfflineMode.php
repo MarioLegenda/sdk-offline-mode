@@ -49,7 +49,7 @@ class EbayOfflineMode
                 // makes a request and adds the response to newly created response file
                 $client = new Client();
 
-                $guzzleResponse = $client->request('xml', $request);
+                $guzzleResponse = $client->request($this->ebayApiObject->getRequest()->getMethod(), $request);
                 $stringResponse = (string) $guzzleResponse->getBody();
                 file_put_contents($responseFile, $stringResponse);
 
@@ -69,7 +69,7 @@ class EbayOfflineMode
 
             $client = new Client();
 
-            $guzzleResponse = $client->request('xml', $request);
+            $guzzleResponse = $client->request($this->ebayApiObject->getRequest()->getMethod(), $request);
             $stringResponse = (string) $guzzleResponse->getBody();
             file_put_contents($responseFile, $stringResponse);
 

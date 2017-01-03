@@ -3,7 +3,7 @@
 namespace EbayOfflineMode;
 
 use EbayOfflineMode\Exception\EbayOfflineModeException;
-use FindingAPI\Finding;
+use SDKBuilder\AbstractSDK;
 use GuzzleHttp\Client;
 
 class EbayOfflineMode
@@ -18,9 +18,9 @@ class EbayOfflineMode
     private $requestHandle;
     /**
      * EbayOfflineMode constructor.
-     * @param Finding $ebayApi
+     * @param AbstractSDK\ $ebayApi
      */
-    public function __construct(Finding $ebayApi)
+    public function __construct(AbstractSDK $ebayApi)
     {
         $this->ebayApiObject = $ebayApi;
 
@@ -49,7 +49,7 @@ class EbayOfflineMode
                 // makes a request and adds the response to newly created response file
                 $client = new Client();
 
-                $guzzleResponse = $client->request($this->ebayApiObject->getRequest()->getRequestParameters()->getParameter('method')->getValue(), $request);
+                $guzzleResponse = $client->request('xml', $request);
                 $stringResponse = (string) $guzzleResponse->getBody();
                 file_put_contents($responseFile, $stringResponse);
 
@@ -69,7 +69,7 @@ class EbayOfflineMode
 
             $client = new Client();
 
-            $guzzleResponse = $client->request($this->ebayApiObject->getRequest()->getRequestParameters()->getParameter('method')->getValue(), $request);
+            $guzzleResponse = $client->request('xml', $request);
             $stringResponse = (string) $guzzleResponse->getBody();
             file_put_contents($responseFile, $stringResponse);
 

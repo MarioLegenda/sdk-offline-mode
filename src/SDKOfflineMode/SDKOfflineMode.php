@@ -1,28 +1,28 @@
 <?php
 
-namespace EbayOfflineMode;
+namespace SDKOfflineMode;
 
-use EbayOfflineMode\Exception\EbayOfflineModeException;
+use SDKOfflineMode\Exception\SDKOfflineModeException;
 use SDKBuilder\AbstractSDK;
 use GuzzleHttp\Client;
 
-class EbayOfflineMode
+class SDKOfflineMode
 {
     /**
-     * @var EbayApiInterface $ebayApiObject
+     * @var AbstractSDK\ $ebayApiObject
      */
-    private $ebayApiObject;
+    private $apiObject;
     /**
      * @var resource $requestHandle
      */
     private $requestHandle;
     /**
      * EbayOfflineMode constructor.
-     * @param AbstractSDK\ $ebayApi
+     * @param AbstractSDK\ $api
      */
-    public function __construct(AbstractSDK $ebayApi)
+    public function __construct(AbstractSDK $api)
     {
-        $this->ebayApiObject = $ebayApi;
+        $this->apiObject = $api;
 
         $this->requestHandle = fopen(__DIR__.'/requests.csv', 'a+');
 
@@ -35,7 +35,7 @@ class EbayOfflineMode
      */
     public function getResponse()
     {
-        $request = $this->ebayApiObject->getProcessedRequestString();
+        $request = $this->apiObject->getProcessedRequestString();
         if (!$this->isResponseStored($request)) {
             $requests = file(__DIR__.'/requests.csv');
 
@@ -49,13 +49,13 @@ class EbayOfflineMode
                 // makes a request and adds the response to newly created response file
                 $client = new Client();
 
-                $guzzleResponse = $client->request($this->ebayApiObject->getRequest()->getMethod(), $request);
+                $guzzleResponse = $client->request($this->apiObject->getRequest()->getMethod(), $request);
                 $stringResponse = (string) $guzzleResponse->getBody();
                 file_put_contents($responseFile, $stringResponse);
 
                 fclose($this->requestHandle);
 
-                return $this->ebayApiObject->getResponse($stringResponse);
+                return $this->apiObject->getResponse($stringResponse);
             }
 
             $lastRequest = preg_split('#;#', array_pop($requests));
@@ -69,13 +69,13 @@ class EbayOfflineMode
 
             $client = new Client();
 
-            $guzzleResponse = $client->request($this->ebayApiObject->getRequest()->getMethod(), $request);
+            $guzzleResponse = $client->request($this->apiObject->getRequest()->getMethod(), $request);
             $stringResponse = (string) $guzzleResponse->getBody();
             file_put_contents($responseFile, $stringResponse);
 
             fclose($this->requestHandle);
 
-            return $this->ebayApiObject->getResponse($stringResponse);
+            return $this->apiObject->getResponse($stringResponse);
         }
 
         if ($this->isResponseStored($request) === true) {
@@ -91,12 +91,12 @@ class EbayOfflineMode
 
                     fclose($this->requestHandle);
 
-                    return $this->ebayApiObject->getResponse($stringResponse);
+                    return $this->apiObject->getResponse($stringResponse);
                 }
             }
         }
 
-        throw new EbayOfflineModeException('There is a possible bug in EbayOfflineMode. Please, fix it');
+        throw new SDKOfflineModeException('There is a possible bug in EbayOfflineMode. Please, fix it');
     }
 
     public function isResponseStored(string $request) : bool

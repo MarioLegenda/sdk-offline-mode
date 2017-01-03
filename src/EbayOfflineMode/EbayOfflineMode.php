@@ -99,7 +99,7 @@ class EbayOfflineMode
         throw new EbayOfflineModeException('There is a possible bug in EbayOfflineMode. Please, fix it');
     }
 
-    private function isResponseStored(string $request) : bool
+    public function isResponseStored(string $request) : bool
     {
         $requests = file(__DIR__.'/requests.csv');
 
